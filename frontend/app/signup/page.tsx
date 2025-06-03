@@ -50,7 +50,7 @@ export default function SignupPage() {
       // and then fall back to the backend API if needed
       const response = await apiRequest({
         url: "/api/auth/signup",
-        backendUrl: "http://localhost:5000/api/auth/register", // Note: backend uses "register" endpoint
+        backendUrl: "https://tiffin-backend-tvjj.onrender.com/api/auth/register", // Note: backend uses "register" endpoint
         method: "POST",
         body: userData
       })

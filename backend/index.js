@@ -13,10 +13,17 @@ dotenv.config();
 // Database connection is already established in connection.js
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 10000; // Render will set the PORT env variable
 
 // Middleware
-app.use(cors())
+app.use(cors({
+  origin: [
+    'https://tiffin-frontend-lakshya.vercel.app',
+    'http://localhost:3000',
+    '*'
+  ],
+  credentials: true
+}))
 app.use(express.json());
 
 // Routes
@@ -29,5 +36,7 @@ app.use('/api/admin/orders', orderRoutes);
 app.use(errorHandler);
 
 app.listen(PORT, () => {
+  const baseUrl = process.env.BASE_URL || `http://localhost:${PORT}`;
   console.log(`Server running on port ${PORT}`);
+  console.log(`API URL: ${baseUrl}`);
 });

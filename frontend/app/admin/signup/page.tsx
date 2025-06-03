@@ -68,7 +68,7 @@ export default function AdminSignupPage() {
       // Register the admin user
       const response = await apiRequest({
         url: "/api/auth/admin-signup",
-        backendUrl: "http://localhost:5000/api/auth/admin-register",
+        backendUrl: "https://tiffin-backend-tvjj.onrender.com/api/auth/admin-register",
         method: "POST",
         body: userData
       })

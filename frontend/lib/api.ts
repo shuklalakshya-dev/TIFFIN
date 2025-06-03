@@ -6,7 +6,7 @@
  */
 export async function apiRequest<T = any>({
   url,
-  backendUrl = url.startsWith('/') ? `https://tiffin-backend-tvjj.onrender.com{url}` : url,
+  backendUrl = url.startsWith('/') ? `https://tiffin-backend-tvjj.onrender.com${url}` : url,
   method = "GET",
   token,
   body,

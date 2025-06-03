@@ -21,7 +21,7 @@ try {
 
 const testConnection = async () => {
   try {
-    const uri = process.env.MONGO_URI || 'mongodb://localhost:27017/ecommerce';
+    const uri = process.env.MONGODB_URI || 'mongodb+srv://LAKSHYA:LAKSHYA123@cluster0.w8dwhc9.mongodb.net/tiffin?retryWrites=true&w=majority&appName=Cluster0';
     console.log('Connecting to MongoDB with:', uri);
     await mongoose.connect(uri);
     console.log('MongoDB connection successful!');
