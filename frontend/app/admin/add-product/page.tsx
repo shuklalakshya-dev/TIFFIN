@@ -12,7 +12,7 @@ import { toast } from "@/components/ui/use-toast"
 import { ArrowLeft } from "lucide-react"
 import Image from "next/image"
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://tiffin-backend-tvjj.onrender.com'
 
 export default function AddProductPage() {
   const router = useRouter()
