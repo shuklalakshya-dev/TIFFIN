@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { Navbar } from "@/components/Navbar"
 import { Button } from "@/components/ui/button"
 import FooterMain from "@/components/FooterMain"
+import { redirectToFrontendUrl } from "@/lib/url-helpers"
 import {
   Card,
   CardContent,
@@ -208,7 +209,7 @@ export default function HomePage() {
                 variant="outline" 
                 size="lg" 
                 className="border-white text-black hover:bg-white/20 px-8 py-6 text-lg"
-                onClick={() => window.location.href = '/menu'}
+                onClick={() => redirectToFrontendUrl('/menu')}
               >
                 View Menu
               </Button>

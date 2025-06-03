@@ -18,9 +18,9 @@ const PORT = process.env.PORT || 10000; // Render will set the PORT env variable
 // Middleware
 app.use(cors({
   origin: [
-    'https://tiffin-frontend-lakshya.vercel.app',
+    'https://tiffin-5-b0sgj48jj-shuklalakshya-devs-projects.vercel.app',
     'http://localhost:3000',
-    '*'
+    process.env.FRONTEND_URL || '*'
   ],
   credentials: true
 }))

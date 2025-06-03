@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { useAuth } from "@/contexts/AuthContext"
+import { redirectToFrontendUrl } from "@/lib/url-helpers"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -44,10 +45,9 @@ export default function AdminLoginPage() {
           title: "Access denied",
           description: "This login is only for administrators",
           variant: "destructive",
-        })
-        // Logout the non-admin user
+        })        // Logout the non-admin user
         localStorage.removeItem("token")
-        window.location.href = "/admin/login"
+        redirectToFrontendUrl('/admin/login')
       }
     } else {
       toast({
