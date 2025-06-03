@@ -1,5 +1,6 @@
-import React from "react"
 import { OrderManagement } from "@/components/admin/OrderManagement"
+import React from "react"
+
 
 export default function AdminOrdersPage() {
   // you can pass a real stats‐update fn here if needed
