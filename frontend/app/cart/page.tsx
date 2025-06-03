@@ -236,9 +236,12 @@ export default function CartPage() {
               </div>
             </CardContent>
             <CardFooter>
-              <Button className="w-full bg-orange-600 hover:bg-orange-700">
-                Proceed to Checkout
-              </Button>
+        <Button
+          onClick={() => router.push("/checkout")}    // ← push to /checkout
+          className="w-full bg-orange-600 hover:bg-orange-700"
+        >
+          Proceed to Checkout
+        </Button>
             </CardFooter>
           </Card>
         </div>
