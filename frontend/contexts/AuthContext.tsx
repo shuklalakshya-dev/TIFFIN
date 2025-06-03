@@ -29,7 +29,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (token) {
       apiRequest({
         url: "/api/auth/verify",
-        backendUrl: "http://localhost:5000/api/auth/verify",
+        backendUrl: "https://tiffin-backend-tvjj.onrender.com/api/auth/verify",
         token
       })
         .then((data) => {
@@ -57,7 +57,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       const data = await apiRequest({
         url: "/api/auth/login",
-        backendUrl: "http://localhost:5000/api/auth/login",
+        backendUrl: "https://tiffin-backend-tvjj.onrender.com/api/auth/login",
         method: "POST",
         body: { email, password }
       })

@@ -13,12 +13,12 @@ const createSeedUsers = async () => {
     console.log('All users deleted');
 
     // Create admin user
-    const adminUser = await User.create({
-      name: 'Admin User',
-      email: 'admin@demo.com',
-      password: 'admin123',
-      role: 'admin',
-    });
+    // const adminUser = await User.create({
+    //   name: 'Admin User',
+    //   email: 'admin@demo.com',
+    //   password: 'admin123',
+    //   role: 'admin',
+    // });
     console.log('Admin user created:', adminUser.email);
 
     // Create regular user

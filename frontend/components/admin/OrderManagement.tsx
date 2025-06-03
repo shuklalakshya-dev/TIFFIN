@@ -45,7 +45,7 @@ export function OrderManagement({ onStatsUpdate }: OrderManagementProps) {
       
       const data = await apiRequest<Order[]>({
         url: "/api/admin/orders",
-        backendUrl: "http://localhost:5000/api/admin/orders",
+        backendUrl: "https://tiffin-backend-tvjj.onrender.com/api/admin/orders",
         token
       })
       
@@ -68,7 +68,7 @@ export function OrderManagement({ onStatsUpdate }: OrderManagementProps) {
       
       await apiRequest({
         url: `/api/admin/orders/${orderId}`,
-        backendUrl: `http://localhost:5000/api/admin/orders/${orderId}`,
+        backendUrl: `https://tiffin-backend-tvjj.onrender.com/api/admin/orders/${orderId}`,
         method: "PUT",
         token,
         body: { status }
