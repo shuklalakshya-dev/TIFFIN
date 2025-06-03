@@ -2,7 +2,7 @@ import React from 'react'
 
 const footer = () => {
   return (
-    <div>
+    <div>  // ========== FOOTER ==========
         {/* ========== FOOTER ========== */}
 <footer className="relative overflow-hidden bg-neutral-900">
   <svg className="absolute -bottom-20 start-1/2 w-[1900px] transform -translate-x-1/2" width="2745" height="488" viewBox="0 0 2745 488" fill="none" xmlns="http://www.w3.org/2000/svg">
