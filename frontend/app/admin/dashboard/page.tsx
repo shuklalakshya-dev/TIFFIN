@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Package } from "lucide-react"
 import ProductManagement from "@/components/admin/ProductManagement" // ← import it
 import React from "react"
-import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 
 interface Stats {
@@ -20,6 +20,8 @@ export default function AdminDashboardPage() {
     inStockProducts: 0,
     outOfStockProducts: 0,
   })
+
+  const router = useRouter()
 
   // fetch stats on mount and on refresh
   const fetchStats = async () => {
@@ -92,8 +94,8 @@ export default function AdminDashboardPage() {
         <ProductManagement onStatsUpdate={fetchStats} />
       </div>
 
-      <Button asChild>
-        <Link href="/admin/orders">Order Management</Link>
+      <Button onClick={() => router.push("/admin/orders")}>
+        Order Management
       </Button>
     </div>
   )
