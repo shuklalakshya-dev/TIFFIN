@@ -4,6 +4,9 @@ import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Package } from "lucide-react"
 import ProductManagement from "@/components/admin/ProductManagement" // ← import it
+import React from "react"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
 
 interface Stats {
   totalProducts: number
@@ -88,6 +91,10 @@ export default function AdminDashboardPage() {
         {/* this component will show each product with image, details, edit & delete buttons */}
         <ProductManagement onStatsUpdate={fetchStats} />
       </div>
+
+      <Button asChild>
+        <Link href="/admin/orders">Order Management</Link>
+      </Button>
     </div>
   )
 }
