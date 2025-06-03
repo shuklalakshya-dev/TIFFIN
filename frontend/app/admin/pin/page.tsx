@@ -36,7 +36,7 @@ export default function AdminPinPage() {
           onChange={e => setPin(e.target.value)}
           required
         />
-        <Button type="submit" className="w-full" disabled={loading}>
+        <Button type="submit" className="w-full" >
           {loading ? "Verifying…" : "Enter Dashboard"}
         </Button>
       </form>
