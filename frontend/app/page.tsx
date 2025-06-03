@@ -68,7 +68,7 @@ export default function HomePage() {
       setLoading(false)
     }
   }
-
+  // Handle adding product to cart
   const handleAddToCart = (product: Product) => {
     if (!user) {
       toast({
