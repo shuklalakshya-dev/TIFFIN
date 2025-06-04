@@ -10,15 +10,14 @@ export default function AdminPinPage() {
   const [pin, setPin] = useState("")
   const [loading, setLoading] = useState(false)
   const router = useRouter()
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
     if (pin === "admin123") {
       // persist for 1 day
       document.cookie = `adminPin=${pin}; path=/; max-age=${60*60*24}`
-      toast({ title: "Access granted", description: "Redirecting…" })
-      router.push("/admin/add-product")
+      toast({ title: "Access granted", description: "Redirecting to dashboard…" })
+      router.push("/admin/dashboard")
     } else {
       toast({ title: "Wrong PIN", variant: "destructive" })
     }

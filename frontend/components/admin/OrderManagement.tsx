@@ -49,22 +49,36 @@ export function OrderManagement({ onStatsUpdate }: OrderManagementProps) {
   const fetchOrders = async () => {
     try {
       setLoading(true)
-      const token = localStorage.getItem("token")
       
-      const data = await apiRequest<Order[]>({
-        url: "/api/admin/orders",
-        backendUrl: "https://tiffin-backend-tvjj.onrender.com/api/admin/orders",
-        token
+      // Get admin PIN from cookies for authentication
+      const adminPin = document.cookie.split('; ').find(row => row.startsWith('adminPin='))?.split('=')[1]
+      
+      if (!adminPin) {
+        throw new Error("Admin PIN not found. Please re-authenticate.")
+      }
+      
+      const response = await fetch("/api/admin/orders", {
+        method: "GET",
+        headers: {
+          "x-admin-pin": adminPin,
+          "Content-Type": "application/json",
+        },
       })
       
-      if (data) {
-        setOrders(data)
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ message: "Unknown error" }))
+        throw new Error(errorData.message || `HTTP ${response.status}: ${response.statusText}`)
       }
+      
+      const data = await response.json()
+      setOrders(Array.isArray(data) ? data : [])
+      
+      console.log(`Fetched ${data.length} orders`)
     } catch (error) {
       console.error("Failed to fetch orders:", error)
       toast({
         title: "Error",
-        description: "Failed to fetch orders. Please try again.",
+        description: error instanceof Error ? error.message : "Failed to fetch orders. Please try again.",
         variant: "destructive",
       })
     } finally {
@@ -74,15 +88,26 @@ export function OrderManagement({ onStatsUpdate }: OrderManagementProps) {
 
   const updateOrderStatus = async (orderId: string, status: string) => {
     try {
-      const token = localStorage.getItem("token")
+      // Get admin PIN from cookies for authentication
+      const adminPin = document.cookie.split('; ').find(row => row.startsWith('adminPin='))?.split('=')[1]
       
-      await apiRequest({
-        url: `/api/admin/orders/${orderId}`,
-        backendUrl: `https://tiffin-backend-tvjj.onrender.com/api/admin/orders/${orderId}`,
+      if (!adminPin) {
+        throw new Error("Admin PIN not found. Please re-authenticate.")
+      }
+      
+      const response = await fetch(`/api/admin/orders/${orderId}`, {
         method: "PATCH",
-        body: { status },
-        token
+        headers: {
+          "x-admin-pin": adminPin,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ status }),
       })
+      
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ message: "Unknown error" }))
+        throw new Error(errorData.message || `HTTP ${response.status}: ${response.statusText}`)
+      }
       
       // Update local state
       setOrders(prevOrders => 
@@ -102,7 +127,7 @@ export function OrderManagement({ onStatsUpdate }: OrderManagementProps) {
       console.error("Failed to update order status:", error)
       toast({
         title: "Error",
-        description: "Failed to update order status. Please try again.",
+        description: error instanceof Error ? error.message : "Failed to update order status. Please try again.",
         variant: "destructive",
       })
     }

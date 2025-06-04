@@ -1,38 +1,28 @@
 import { type NextRequest, NextResponse } from "next/server"
 import { getDatabase } from "@/lib/mongodb"
-import { verifyToken } from "@/lib/auth"
 import { ObjectId } from "mongodb"
 
-async function verifyAdmin(request: NextRequest) {
-  const authHeader = request.headers.get("authorization")
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return null
+async function verifyAdminPin(request: NextRequest) {
+  // Check for admin PIN in cookies or headers
+  const cookies = request.headers.get("cookie")
+  if (cookies && cookies.includes("adminPin=admin123")) {
+    return true
   }
-
-  const token = authHeader.substring(7)
-  const decoded = verifyToken(token) as any
-
-  if (!decoded) {
-    return null
+  
+  // Also check for admin PIN in request headers (for API calls)
+  const adminPin = request.headers.get("x-admin-pin")
+  if (adminPin === "admin123") {
+    return true
   }
-
-  const db = await getDatabase()
-  const user = await db.collection("users").findOne({
-    _id: new ObjectId(decoded.userId),
-  })
-
-  if (!user || user.role !== "admin") {
-    return null
-  }
-
-  return user
+  
+  return false
 }
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const user = await verifyAdmin(request)
-    if (!user) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 })
+    const isAdmin = verifyAdminPin(request)
+    if (!isAdmin) {
+      return NextResponse.json({ message: "Unauthorized - Admin access required" }, { status: 401 })
     }
 
     const { status } = await request.json()

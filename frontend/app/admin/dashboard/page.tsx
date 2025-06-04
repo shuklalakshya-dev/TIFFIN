@@ -2,13 +2,14 @@
 
 import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Package } from "lucide-react"
+import { Package, Database } from "lucide-react"
 import ProductManagement from "@/components/admin/ProductManagement" // ← import it
 import React from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ShoppingBag } from "lucide-react"
+import { useToast } from "@/components/ui/use-toast"
 
 interface Stats {
   totalProducts: number
@@ -22,8 +23,36 @@ export default function AdminDashboardPage() {
     inStockProducts: 0,
     outOfStockProducts: 0,
   })
-
   const router = useRouter()
+  const { toast } = useToast()
+
+  // Seed database with test data
+  const seedDatabase = async () => {
+    try {
+      const response = await fetch("/api/seed", { method: "POST" })
+      const data = await response.json()
+      
+      if (response.ok) {
+        toast({
+          title: "Database Seeded",
+          description: `Added ${data.data.products} products and ${data.data.orders} orders`,
+        })
+        fetchStats() // Refresh stats after seeding
+      } else {
+        toast({
+          title: "Seed Error",
+          description: data.message,
+          variant: "destructive",
+        })
+      }
+    } catch (error) {
+      toast({
+        title: "Seed Error", 
+        description: "Failed to seed database",
+        variant: "destructive",
+      })
+    }
+  }
 
   // fetch stats on mount and on refresh
   const fetchStats = async () => {
@@ -94,15 +123,18 @@ export default function AdminDashboardPage() {
         <h2 className="text-xl font-semibold mb-4">Manage Products</h2>
         {/* this component will show each product with image, details, edit & delete buttons */}
         <ProductManagement onStatsUpdate={fetchStats} />
-      </div>
-
-      {/* Order Management Button */}
-      <Button asChild className="flex items-center gap-2" onClick={() => router.push("/admin/orders")}>
-        <Link href="/admin/orders">
+      </div>      {/* Action Buttons */}
+      <div className="flex flex-wrap gap-4">
+        <Button onClick={() => router.push("/admin/orders")} className="flex items-center gap-2">
           <ShoppingBag className="h-4 w-4" />
           Manage Orders
-        </Link>
-      </Button>
+        </Button>
+        
+        <Button onClick={seedDatabase} variant="outline" className="flex items-center gap-2">
+          <Database className="h-4 w-4" />
+          Seed Test Data
+        </Button>
+      </div>
     </div>
   )
 }
