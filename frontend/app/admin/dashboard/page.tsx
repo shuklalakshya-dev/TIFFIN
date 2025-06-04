@@ -6,7 +6,9 @@ import { Package } from "lucide-react"
 import ProductManagement from "@/components/admin/ProductManagement" // ← import it
 import React from "react"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
+import { ShoppingBag } from "lucide-react"
 
 interface Stats {
   totalProducts: number
@@ -94,8 +96,12 @@ export default function AdminDashboardPage() {
         <ProductManagement onStatsUpdate={fetchStats} />
       </div>
 
-      <Button onClick={() => router.push("/admin/orders")}>
-        Order Management
+      {/* Order Management Button */}
+      <Button asChild className="flex items-center gap-2" onClick={() => router.push("/admin/orders")}>
+        <Link href="/admin/orders">
+          <ShoppingBag className="h-4 w-4" />
+          Manage Orders
+        </Link>
       </Button>
     </div>
   )
