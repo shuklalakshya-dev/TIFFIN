@@ -19,23 +19,40 @@ interface CartContextType {
   clearCart: () => void
   getTotalPrice: () => number
   getTotalItems: () => number
+  appliedPromo: string | null
+  setAppliedPromo: (promo: string | null) => void
+  getDiscountAmount: () => number
+  getFinalTotal: () => number
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([])
+  const [appliedPromo, setAppliedPromo] = useState<string | null>(null)
 
   useEffect(() => {
     const savedCart = localStorage.getItem("cart")
+    const savedPromo = localStorage.getItem("appliedPromo")
     if (savedCart) {
       setItems(JSON.parse(savedCart))
+    }
+    if (savedPromo) {
+      setAppliedPromo(savedPromo)
     }
   }, [])
 
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(items))
   }, [items])
+
+  useEffect(() => {
+    if (appliedPromo) {
+      localStorage.setItem("appliedPromo", appliedPromo)
+    } else {
+      localStorage.removeItem("appliedPromo")
+    }
+  }, [appliedPromo])
 
   const addToCart = (item: Omit<CartItem, "quantity">) => {
     setItems((prev) => {
@@ -61,6 +78,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const clearCart = () => {
     setItems([])
+    setAppliedPromo(null)
   }
 
   const getTotalPrice = () => {
@@ -69,6 +87,24 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const getTotalItems = () => {
     return items.reduce((total, item) => total + item.quantity, 0)
+  }
+
+  const getDiscountAmount = () => {
+    if (appliedPromo === "TIFFIN") {
+      const subtotal = getTotalPrice()
+      const deliveryFee = subtotal > 0 ? 50 : 0
+      const totalBeforeDiscount = subtotal + deliveryFee
+      // Set total to exactly ₹70 with TIFFIN promo
+      return Math.max(0, totalBeforeDiscount - 70)
+    }
+    return 0
+  }
+
+  const getFinalTotal = () => {
+    const subtotal = getTotalPrice()
+    const deliveryFee = subtotal > 0 ? 50 : 0
+    const discount = getDiscountAmount()
+    return subtotal + deliveryFee - discount
   }
 
   return (
@@ -81,6 +117,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         clearCart,
         getTotalPrice,
         getTotalItems,
+        appliedPromo,
+        setAppliedPromo,
+        getDiscountAmount,
+        getFinalTotal,
       }}
     >
       {children}

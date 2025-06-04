@@ -14,12 +14,11 @@ import { Minus, Plus, Trash2, Tag } from "lucide-react"
 import Image from "next/image"
 
 export default function CartPage() {
-  const { items, updateQuantity, removeFromCart, clearCart } = useCart()
+  const { items, updateQuantity, removeFromCart, clearCart, appliedPromo, setAppliedPromo, getDiscountAmount, getFinalTotal, getTotalPrice } = useCart()
   const { user } = useAuth()
   const router = useRouter()
 
   const [promoCode, setPromoCode] = useState("")
-  const [appliedPromo, setAppliedPromo] = useState<string | null>(null)
 
   useEffect(() => {
     if (!user) {
@@ -31,19 +30,10 @@ export default function CartPage() {
     return null
   }
 
-  const subtotal = items.reduce((total, item) => total + item.price * item.quantity, 0)
-  const deliveryFee = subtotal > 0 ? 40 : 0
-
-  // Calculate discount if promo code is applied
-  let total = subtotal + deliveryFee;
-  let discount = 0;
-
-  if (appliedPromo === "TIFFIN") {
-    // If promo code is applied, set TOTAL to exactly ₹70
-    total = 70;
-    // Calculate the discount as everything being removed except for ₹70
-    discount = (subtotal + deliveryFee) - 70;
-  }
+  const subtotal = getTotalPrice()
+  const deliveryFee = subtotal > 0 ? 50 : 0
+  const discount = getDiscountAmount()
+  const total = getFinalTotal()
 
   const handleApplyPromo = () => {
     if (promoCode.trim().toUpperCase() === "TIFFIN") {

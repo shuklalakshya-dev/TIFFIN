@@ -21,7 +21,7 @@ export default function CheckoutPage() {
     address: "",
   })
   const [loading, setLoading] = useState(false)
-  const { items, getTotalPrice, clearCart } = useCart()
+  const { items, getTotalPrice, clearCart, appliedPromo, getDiscountAmount, getFinalTotal } = useCart()
   const { user } = useAuth()
   const router = useRouter()
   const { toast } = useToast()
@@ -59,7 +59,9 @@ export default function CheckoutPage() {
         body: JSON.stringify({
           customerInfo,
           items,
-          totalAmount: getTotalPrice() + 50,
+          totalAmount: getFinalTotal(),
+          promoCode: appliedPromo,
+          discountAmount: getDiscountAmount(),
         }),
       })
 
@@ -167,9 +169,15 @@ export default function CheckoutPage() {
                 <span>Delivery</span>
                 <span>₹50.00</span>
               </div>
+              {appliedPromo && (
+                <div className="flex justify-between py-2 text-green-600">
+                  <span>Promo Code ({appliedPromo})</span>
+                  <span>-₹{getDiscountAmount().toFixed(2)}</span>
+                </div>
+              )}
               <div className="flex justify-between py-2 font-bold">
                 <span>Total</span>
-                <span>₹{(getTotalPrice() + 50).toFixed(2)}</span>
+                <span>₹{getFinalTotal().toFixed(2)}</span>
               </div>
             </CardContent>
           </Card>

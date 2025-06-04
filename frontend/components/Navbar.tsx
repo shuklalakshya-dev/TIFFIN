@@ -4,7 +4,7 @@ import Link from "next/link"
 import { useAuth } from "@/contexts/AuthContext"
 import { useCart } from "@/contexts/CartContext"
 import { Button } from "@/components/ui/button"
-import { ShoppingCart, User, LogOut, Menu, X } from "lucide-react"
+import { ShoppingCart, User, LogOut, Menu, X, Package } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { motion, AnimatePresence } from "framer-motion"
 import { useState } from "react"
@@ -83,6 +83,9 @@ export function Navbar() {
                     </motion.div>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
+                    <DropdownMenuItem asChild>
+                      <Link href="/my-orders">My Orders</Link>
+                    </DropdownMenuItem>
                     {user.role === "admin" && (
                       <DropdownMenuItem asChild>
                         <Link href="/admin">Admin Dashboard</Link>
@@ -183,6 +186,13 @@ export function Navbar() {
                     <User className="h-4 w-4" />
                     <span>Welcome, {user.name}</span>
                   </div>
+                  
+                  <Link href="/my-orders" onClick={closeMobileMenu}>
+                    <Button variant="outline" className="w-full justify-start">
+                      <Package className="h-4 w-4 mr-2" />
+                      My Orders
+                    </Button>
+                  </Link>
                   
                   {user.role === "admin" && (
                     <Link href="/admin" onClick={closeMobileMenu}>

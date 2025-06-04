@@ -133,7 +133,9 @@ export async function POST() {
             quantity: 1
           }
         ],
-        totalAmount: 340,
+        totalAmount: 70,
+        promoCode: "TIFFIN",
+        discountAmount: 270,
         status: "pending",
         createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000) // 2 days ago
       },
@@ -196,7 +198,9 @@ export async function POST() {
             quantity: 1
           }
         ],
-        totalAmount: 120,
+        totalAmount: 70,
+        promoCode: "TIFFIN",
+        discountAmount: 100,
         status: "delivered", 
         createdAt: new Date(Date.now() - 6 * 60 * 60 * 1000) // 6 hours ago
       },

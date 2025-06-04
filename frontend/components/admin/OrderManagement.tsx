@@ -29,6 +29,8 @@ interface Order {
     quantity: number
   }>
   totalAmount: number
+  promoCode?: string
+  discountAmount?: number
   status: "pending" | "confirmed" | "preparing" | "delivered"
   createdAt: string
 }
@@ -226,6 +228,20 @@ export function OrderManagement({ onStatsUpdate }: OrderManagementProps) {
                         </div>
                       ))}
                       <hr />
+                      <div className="flex justify-between text-sm">
+                        <span>Subtotal:</span>
+                        <span>₹{order.items.reduce((sum, item) => sum + (item.price * item.quantity), 0)}</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span>Delivery Fee:</span>
+                        <span>₹50</span>
+                      </div>
+                      {order.promoCode && (
+                        <div className="flex justify-between text-sm text-green-600">
+                          <span>Promo Code ({order.promoCode}):</span>
+                          <span>-₹{order.discountAmount || 0}</span>
+                        </div>
+                      )}
                       <div className="flex justify-between font-semibold">
                         <span>Total Amount:</span>
                         <span>₹{order.totalAmount}</span>
