@@ -206,14 +206,14 @@ export default function HomePage() {
                 <ChevronRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Button>
               
-              <Button 
+              {/* <Button  
                 variant="outline" 
                 size="lg" 
                 className="border-white text-white hover:bg-white/20 px-6 sm:px-8 py-5 sm:py-6 text-base sm:text-lg w-full sm:w-auto"
                 onClick={() => redirectToFrontendUrl('/menu')}
               >
                 View Menu
-              </Button>
+              </Button> */}
             </motion.div>
           </motion.div>
           
