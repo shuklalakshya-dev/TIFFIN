@@ -244,19 +244,19 @@ export default function HomePage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
             <div className="flex items-center justify-center md:justify-start gap-1 sm:gap-2 text-xs sm:text-sm">
               <Package className="h-3 w-3 sm:h-4 sm:w-4 text-indigo-600 flex-shrink-0" />
-              <span>Free shipping over $50</span>
+              <span>Free shipping over Rs.50</span>
             </div>
             <div className="flex items-center justify-center md:justify-start gap-1 sm:gap-2 text-xs sm:text-sm">
               <Tag className="h-3 w-3 sm:h-4 sm:w-4 text-indigo-600 flex-shrink-0" />
-              <span>Best prices guaranteed</span>
+              <span>Best Food Quality</span>
             </div>
             <div className="flex items-center justify-center md:justify-start gap-1 sm:gap-2 text-xs sm:text-sm">
               <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4 text-indigo-600 flex-shrink-0" />
-              <span>New products weekly</span>
+              <span>Freshly Homemade food</span>
             </div>
             <div className="flex items-center justify-center md:justify-start gap-1 sm:gap-2 text-xs sm:text-sm">
               <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 text-indigo-600 flex-shrink-0" />
-              <span>Exclusive deals</span>
+              <span>Mom's Magic✨</span>
             </div>
           </div>
         </div>
