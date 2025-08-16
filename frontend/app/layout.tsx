@@ -11,7 +11,18 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "TiffinExpress - Fresh Homemade Meals",
   description: "Order fresh, homemade tiffins delivered to your doorstep",
-    generator: 'v0.dev'
+  generator: 'v0.dev',
+  icons: {
+    icon: [
+      { url: '/favicon-16x16.svg', sizes: '16x16', type: 'image/svg+xml' },
+      { url: '/favicon-32x32.svg', sizes: '32x32', type: 'image/svg+xml' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+    shortcut: '/favicon.svg',
+    apple: [
+      { url: '/apple-touch-icon.svg', sizes: '192x192', type: 'image/svg+xml' },
+    ],
+  },
 }
 
 export default function RootLayout({
